@@ -31,7 +31,7 @@
         "embedding_ctx_length": 256,
     }
    ```
-   在ONLINE_LLM_MODEL对象中，加入以下配置项：
+   在ONLINE_LLM_MODEL对象中，注释掉原来的"openai-api"配置项，加入新的：
    ```
     # CloseAI OpenAI Proxy
     "openai-api": {
