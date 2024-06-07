@@ -34,7 +34,7 @@
    在ONLINE_LLM_MODEL对象中，加入以下配置项：
    ```
     # CloseAI OpenAI Proxy
-    "closeai-openai-proxy": {
+    "openai-api": {
         "model_name": "gpt-4",
         "api_base_url": "https://api.openai-proxy.org/v1",
         "api_key": "sk-Gl1V3nAzyE3m8wAiEEx6ijlcoux3Vx5lP4ZVj5v0tmaJYKhe",
