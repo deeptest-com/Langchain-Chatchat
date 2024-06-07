@@ -2,7 +2,7 @@ from langchain.embeddings.base import Embeddings
 from langchain.vectorstores.faiss import FAISS
 import threading
 from configs import (EMBEDDING_MODEL, CHUNK_SIZE,
-                     logger, log_verbose)
+                     logger, log_verbose, EMBEDDING_MODEL_USE_OPENAI, EMBEDDING_MODEL_OPENAI)
 from server.utils import embedding_device, get_model_path, list_online_embed_models
 from contextlib import contextmanager
 from collections import OrderedDict
@@ -127,7 +127,31 @@ class EmbeddingsPool(CachePool):
             self.set(key, item)
             with item.acquire(msg="初始化"):
                 self.atomic.release()
-                if model == "text-embedding-ada-002":  # openai text-embedding-ada-002
+
+                if EMBEDDING_MODEL_USE_OPENAI:  # use remote openai embedding model bge-large-zh-v1.5
+                    config = EMBEDDING_MODEL_OPENAI
+
+                    from langchain_community.embeddings import OpenAIEmbeddings
+                    from langchain.embeddings.openai import OpenAIEmbeddings
+
+                    model_name = config.get("model_name", model)
+                    # tiktoken_enabled = config.get("tiktoken_enabled", False)
+                    # tiktoken_model_name = config.get("tiktoken_model_name", "")
+                    # if not tiktoken_enabled:
+                    #     tiktoken_model_name = get_absulute_model_path(model_name, tiktoken_model_name)
+
+                    embeddings = OpenAIEmbeddings(
+                        model=model_name,
+                        openai_api_base=config.get("api_base_url", ""),
+                        openai_api_key=config.get("api_key", "123"),
+                        openai_proxy=config.get("openai_proxy", ""),
+                        # tiktoken_enabled=tiktoken_enabled,
+                        # tiktoken_model_name=tiktoken_model_name,
+                        chunk_size=config.get("chunk_size", 1),
+                        embedding_ctx_length=config.get("embedding_ctx_length", 10),
+                    )
+
+                elif model == "text-embedding-ada-002":  # openai text-embedding-ada-002
                     from langchain.embeddings.openai import OpenAIEmbeddings
                     embeddings = OpenAIEmbeddings(model=model,
                                                   openai_api_key=get_model_path(model),

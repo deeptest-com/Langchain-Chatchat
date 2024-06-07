@@ -60,5 +60,8 @@ if __name__ == "__main__":
             default_index=default_index,
         )
 
+
+    print('start webui ...')
+
     if selected_page in pages:
         pages[selected_page]["func"](api=api, is_lite=is_lite)
