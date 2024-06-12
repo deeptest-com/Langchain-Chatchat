@@ -1,10 +1,15 @@
 1. 执行 git clone git@github.com:deeptest-com/Langchain-Chatchat.git 克隆代码；
 
+2. 安装全部依赖
+   pip install -r requirements.txt 
+   pip install -r requirements_api.txt
+   pip install -r requirements_webui.txt  
 
-2. 执行 python copy_config_example.py 初始化配置文件；
+
+3. 执行 python copy_config_example.py 初始化配置文件；
 
 
-3. 修改configs/model_config.py文件：
+4. 修改configs/model_config.py文件：
    
    第8行`选用的 Embedding 名称`后，至`EMBEDDING_DEVICE = "auto"`前，加入：
    ```
@@ -42,18 +47,18 @@
     },
    ```
    
-4. 执行 python init_database.py --recreate-vs ；
+5. 执行 python init_database.py --recreate-vs ；
 
 
-5. 执行 pip install streamlit 安装streamlit；
+6. 执行 pip install streamlit 安装streamlit；
 
 
-6. 按如下配置启动Server；
+7. 按如下配置启动Server；
 ![img.png](img.png)
 
 
-7. 按如下配置启动WebUI；
+8. 按如下配置启动WebUI；
 ![img_1.png](img_1.png)
 
 
-8. 用浏览器打开起始页http://localhost:8501
+9. 用浏览器打开起始页http://localhost:8501
