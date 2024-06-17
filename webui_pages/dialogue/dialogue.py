@@ -102,7 +102,7 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
     st.session_state.setdefault("file_chat_id", None)
     default_model = api.get_default_llm_model(local_first=False)[0]
 
-    print("is_lite=" + is_lite)
+    print("is_lite", is_lite)
     print("default_model=" + default_model)
 
     if default_model == "":
