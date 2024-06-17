@@ -68,7 +68,7 @@ pip install sentence_transformers
 ```
 python startup.py --all-api --lite
 nohup python startup.py --all-api --lite > server.log 2>&1 & # 如需要后台启动
-ps -ef | grep 'python startup' # 可查看后台启动的服务
+ps -ef | grep 'python startup' | grep -v grep # 可查看后台启动的服务
 ```
 
 也可在PyCharm等IDE中，按如下配置启动Server；
@@ -79,7 +79,7 @@ ps -ef | grep 'python startup' # 可查看后台启动的服务
 ```
 PYTHONUNBUFFERED=1 streamlit run webui.py
 PYTHONUNBUFFERED=1 nohup streamlit run webui.py > webui.log 2>&1 & # 如需要后台启动
-ps -ef | grep 'streamlit run' # 可查看后台启动的服务
+ps -ef | grep 'streamlit run' | grep -v grep # 可查看后台启动的服务
 
 ```
 也可以在PyCharm等IDE中，中按如下配置启动WebUI；
