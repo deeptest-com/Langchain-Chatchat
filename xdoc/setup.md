@@ -10,6 +10,11 @@
 
 
 4. 修改configs/model_config.py文件：
+   29行修改
+   
+   ```LLM_MODELS = ["chatglm3-6b", "zhipu-api", "openai-api"]```
+   为
+   ```LLM_MODELS = ["openai-api"]```
    
    第8行`选用的 Embedding 名称`后，至`EMBEDDING_DEVICE = "auto"`前，加入：
    ```
