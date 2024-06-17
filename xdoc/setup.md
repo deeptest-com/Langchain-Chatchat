@@ -51,14 +51,33 @@
    如果遇到No module named 'websockets'的问题，可执行  pip install websockets 安装 ；
 
 
-6. 执行 pip install streamlit 安装streamlit；
+6. 执行以下命令安装缺少的模块；
+```
+pip install streamlit
+pip install strsimpy
+pip install markdownify
+pip install sentence_transformers
+```
 
+7. 执行以下命令启动服务，如若遇到No module named '模块名' 的错误，执行 pip install 模块名 安装该缺少的模块即可；
+```
+python startup.py --all-api --lite
+nohup python startup.py --all-api --lite > server.log 2>&1 & # 如需要后台启动
+ps -ef | grep 'python startup' # 可查看后台启动的服务
+```
 
-7. 按如下配置启动Server；
+也可在PyCharm等IDE中，按如下配置启动Server；
 ![img.png](img.png)
 
 
-8. 按如下配置启动WebUI；
+8. 执行以下命令启动WebUI；
+```
+PYTHONUNBUFFERED=1 streamlit run webui.py
+PYTHONUNBUFFERED=1 nohup streamlit run webui.py > webui.log 2>&1 & # 如需要后台启动
+ps -ef | grep 'streamlit run' # 可查看后台启动的服务
+
+```
+也可以在PyCharm等IDE中，中按如下配置启动WebUI；
 ![img_1.png](img_1.png)
 
 
