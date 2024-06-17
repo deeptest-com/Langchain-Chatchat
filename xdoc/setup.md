@@ -70,12 +70,12 @@ python startup.py --all-api --lite
 nohup python startup.py --all-api --lite > server.log 2>&1 & # 如需要后台启动
 ps -ef | grep 'python startup' | grep -v grep # 可查看后台启动的服务
 
-# 可查看20000、20001和7861端口所在的服务
+# 可查看各端口所在的服务
 lsof -i :20000
 lsof -i :20001 
 lsof -i :7861
 
-后台重启时需要杀掉进程
+如果在后台运行，重启服务前需要强制杀掉进程
 lsof -i:20000 | grep -v COMMAND | awk '{print $2}' | sudo xargs --no-run-if-empty kill -9
 lsof -i:20001 | grep -v COMMAND | awk '{print $2}' | sudo xargs --no-run-if-empty kill -9
 lsof -i:7861 | grep -v COMMAND | awk '{print $2}' | sudo xargs --no-run-if-empty kill -9
