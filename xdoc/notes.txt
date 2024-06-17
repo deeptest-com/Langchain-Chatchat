@@ -1,0 +1,6 @@
+lsof -i:20000 | grep '(LISTEN)' | awk '{print $2}' | sudo xargs --no-run-if-empty kill -9
+lsof -i:20001 | grep '(LISTEN)' | awk '{print $2}' | sudo xargs --no-run-if-empty kill -9
+lsof -i:7861 | grep '(LISTEN)' | awk '{print $2}' | sudo xargs --no-run-if-empty kill -9
+
+nohup python startup.py --all-api --lite > server.log 2>&1 &
+PYTHONUNBUFFERED=1 nohup streamlit run webui.py > webui.log 2>&1 &
