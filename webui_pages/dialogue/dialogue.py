@@ -101,8 +101,13 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
     st.session_state["conversation_ids"].setdefault(chat_box.cur_chat_name, uuid.uuid4().hex)
     st.session_state.setdefault("file_chat_id", None)
     default_model = api.get_default_llm_model(local_first=False)[0]
+
+    print("is_lite=" + is_lite)
+    print("default_model=" + default_model)
+
     if default_model == "":
         default_model = "openai-api"
+    print("default_model=" + default_model)
 
     if not chat_box.chat_inited:
         st.toast(
@@ -165,14 +170,17 @@ def dialogue_page(api: ApiRequest, is_lite: bool = False):
         running_models = list(api.list_running_models())
         available_models = []
         config_models = api.list_config_models()
+
         if not is_lite:
             for k, v in config_models.get("local", {}).items():
                 if (v.get("model_path_exists")
                         and k not in running_models):
                     available_models.append(k)
+
         for k, v in config_models.get("online", {}).items():
             if not v.get("provider") and k not in running_models and k in LLM_MODELS:
                 available_models.append(k)
+
         llm_models = available_models + running_models
         cur_llm_model = st.session_state.get("cur_llm_model", default_model)
         if cur_llm_model in llm_models:
