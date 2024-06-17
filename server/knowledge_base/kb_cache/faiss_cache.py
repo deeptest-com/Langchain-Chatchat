@@ -1,3 +1,5 @@
+import sys
+
 from configs import CACHED_VS_NUM, CACHED_MEMO_VS_NUM
 from server.knowledge_base.kb_cache.base import *
 from server.knowledge_base.kb_service.base import EmbeddingsFunAdapter
@@ -94,8 +96,13 @@ class KBFaissPool(_FaissPool):
 
                 if os.path.isfile(os.path.join(vs_path, "index.faiss")):
                     embeddings = self.load_kb_embeddings(kb_name=kb_name, embed_device=embed_device, default_embed_model=embed_model)
-                    vector_store = FAISS.load_local(vs_path, embeddings, distance_strategy="METRIC_INNER_PRODUCT")
-                                                    #, allow_dangerous_deserialization=True) only for mac =os
+
+                    if sys.platform == 'darwin': # add param allow_dangerous_deserialization=True
+                        vector_store = FAISS.load_local(vs_path, embeddings, distance_strategy="METRIC_INNER_PRODUCT"
+                                                        , allow_dangerous_deserialization=True)
+                    else:
+                        vector_store = FAISS.load_local(vs_path, embeddings, distance_strategy="METRIC_INNER_PRODUCT")
+
                 elif create:
                     # create an empty vector store
                     if not os.path.exists(vs_path):
