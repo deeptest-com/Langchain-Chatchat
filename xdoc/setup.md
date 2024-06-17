@@ -48,6 +48,7 @@
    ```
    
 5. 执行 python init_database.py --recreate-vs ；
+   如果遇到No module named 'websockets'的问题，可执行  pip install websockets 安装 ；
 
 
 6. 执行 pip install streamlit 安装streamlit；
