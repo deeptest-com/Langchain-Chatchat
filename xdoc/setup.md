@@ -1,9 +1,10 @@
 1. 执行 git clone git@github.com:deeptest-com/Langchain-Chatchat.git 克隆代码；
 
 2. 安装依赖（以下使用远程大模型）
+```
    pip install -r requirements_lite.txt
    pip install -r requirements_webui.txt  
-
+```
 
 3. 执行 python copy_config_example.py 初始化配置文件；
 

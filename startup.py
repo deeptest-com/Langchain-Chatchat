@@ -649,6 +649,12 @@ async def start_main_server():
         args.model_worker = False
         run_mode = "lite"
 
+    # all_api + lite 参数
+    # args.openai_api = True
+    # args.api = True
+    # args.api_worker = True
+    # args.webui = False
+
     dump_server_info(args=args)
 
     if len(sys.argv) > 1:
