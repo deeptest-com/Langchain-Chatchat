@@ -122,4 +122,10 @@ def search_engine(query: str, top_k:int=0, engine_name: str="", config: dict={})
 @regist_tool(title="互联网搜索")
 def search_internet(query: str = Field(description="query for Internet search")):
     """Use this tool to use bing search engine to search the internet and get information."""
-    return BaseToolOutput(search_engine(query=query), format=format_context)
+
+    results = search_engine(query=query)
+    format = format_context
+
+    ret = BaseToolOutput(results, format=format)
+
+    return ret

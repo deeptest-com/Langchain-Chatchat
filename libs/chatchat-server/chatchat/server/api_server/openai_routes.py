@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import AsyncGenerator, Dict, Iterable, Tuple
 
 from fastapi import APIRouter, Request, HTTPException
+from fastapi.openapi import docs
 from fastapi.responses import FileResponse
 from openai import AsyncClient
 from sse_starlette.sse import EventSourceResponse, ServerSentEvent
@@ -79,9 +80,24 @@ async def openai_request(
                     x = OpenAIChatOutput.model_validate(x)
                 else:
                     raise RuntimeError(f"unsupported value: {header}")
+
                 for k, v in extra_json.items():
                     setattr(x, k, v)
-                yield x.model_dump_json()
+
+                # TODO:
+                import copy
+                y = copy.copy(x)
+                docs = []
+                for doc in x.model_extra['tool_output']['docs']:
+                    isDict = type(doc) == dict
+                    docs.append({
+                        "page_content": doc['page_content'] if isDict else doc.page_content,
+                        "metadata": doc['metadata'] if isDict else doc.metadata,
+                        "type": doc['type'] if isDict else doc.type,
+                    })
+                y.model_extra['tool_output']['docs'] = docs
+
+                yield y.model_dump_json()
 
             async for chunk in await method(**params):
                 for k, v in extra_json.items():

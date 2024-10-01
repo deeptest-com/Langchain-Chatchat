@@ -48,6 +48,11 @@ async def kb_chat_endpoint(
         body.max_tokens = Settings.model_settings.MAX_TOKENS
 
     extra = body.model_extra
+
+    if body.extra_json and body.extra_json["score_threshold"]:
+        extra["score_threshold"] = body.extra_json["score_threshold"]
+    print(extra)
+
     ret = await kb_chat(
         query=body.messages[-1]["content"],
         mode=mode,

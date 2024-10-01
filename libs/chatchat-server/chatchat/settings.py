@@ -469,7 +469,7 @@ class ToolSettings(BaseFileSettings):
     search_local_knowledgebase: dict = {
         "use": False,
         "top_k": 3,
-        "score_threshold": 2.0,
+        "score_threshold": 0.1,
         "conclude_prompt": {
             "with_result": '<指令>根据已知信息，简洁和专业的来回答问题。如果无法从中得到答案，请说 "根据已知信息无法回答该问题"，'
             "不允许在答案中添加编造成分，答案请使用中文。 </指令>\n"
@@ -484,11 +484,11 @@ class ToolSettings(BaseFileSettings):
 
     search_internet: dict = {
         "use": False,
-        "search_engine_name": "duckduckgo",
+        "search_engine_name": "bing",
         "search_engine_config": {
             "bing": {
                 "bing_search_url": "https://api.bing.microsoft.com/v7.0/search",
-                "bing_key": "",
+                "bing_key": "d304389dae584d30a20d0d0566d586b6",
             },
             "metaphor": {
                 "metaphor_api_key": "",

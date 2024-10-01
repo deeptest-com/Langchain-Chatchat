@@ -10,7 +10,7 @@ from sse_starlette.sse import EventSourceResponse
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
 
-
+from chatchat.server.chat.helper import get_embedding_model, create_embedding, computer_cosine
 from chatchat.settings import Settings
 from chatchat.server.agent.tools_factory.search_internet import search_engine
 from chatchat.server.api_server.api_schemas import OpenAIChatOutput
@@ -20,8 +20,8 @@ from chatchat.server.knowledge_base.kb_doc_api import search_docs, search_temp_d
 from chatchat.server.knowledge_base.utils import format_reference
 from chatchat.server.utils import (wrap_done, get_ChatOpenAI, get_default_llm,
                                    BaseResponse, get_prompt_template, build_logger,
-                                   check_embed_model, api_address
-                                )
+                                   check_embed_model, api_address, get_base_url
+                                   )
 
 
 logger = build_logger()
@@ -192,6 +192,7 @@ async def kb_chat(query: str = Body(..., description="用户输入", examples=["
                 )
                 yield ret.model_dump_json()
 
+                results = []
                 async for token in callback.aiter():
                     ret = OpenAIChatOutput(
                         id=f"chat{uuid.uuid4()}",
@@ -200,7 +201,42 @@ async def kb_chat(query: str = Body(..., description="用户输入", examples=["
                         role="assistant",
                         model=model,
                     )
+                    results.append(token)
                     yield ret.model_dump_json()
+
+                # # mark testing
+                # embedding_model = get_embedding_model()
+                #
+                # srcDict = {}
+                # resultDict = {}
+                #
+                # i = 0
+                # for doc in docs:
+                #     content = doc.get("page_content")
+                #     embedding_text = create_embedding(embedding_model, content)
+                #     srcDict[i] = {
+                #         "content": content,
+                #         "embedding": embedding_text,
+                #         "marks": []
+                #     }
+                #     i += 1
+                #
+                # result_text = "".join(results)
+                # from chatchat.server.chat.helper import cut_sentences
+                # result_sents = cut_sentences(result_text)
+                #
+                # j = 0
+                # for sent in result_sents:
+                #     embedding_text = create_embedding(embedding_model, sent)
+                #     resultDict[j] = {
+                #         "content": sent,
+                #         "embedding": embedding_text
+                #     }
+                #     j += 1
+                #
+                # computer_cosine(srcDict, resultDict)
+                # print(1)
+
             else:
                 answer = ""
                 async for token in callback.aiter():

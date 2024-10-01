@@ -1,0 +1,5 @@
+pip install pytest-xdist
+
+pytest ../../tests/ --durations=0 -v --capture=no
+
+pytest --benchmark-save=results.json --benchmark-min-rounds=1  -s test_llm.py

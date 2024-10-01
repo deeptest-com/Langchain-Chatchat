@@ -82,6 +82,7 @@ class PGKBService(KBService):
             score_threshold=score_threshold,
         )
         docs = retriever.get_relevant_documents(query)
+
         return docs
 
     def do_add_doc(self, docs: List[Document], **kwargs) -> List[Dict]:

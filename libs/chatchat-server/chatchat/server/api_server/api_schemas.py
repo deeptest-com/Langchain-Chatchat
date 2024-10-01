@@ -169,7 +169,11 @@ class OpenAIBaseOutput(BaseModel):
         return result
 
     def model_dump_json(self):
-        return json.dumps(self.model_dump(), ensure_ascii=False)
+        data = self.model_dump()
+
+        out = json.dumps(data, ensure_ascii=False)
+
+        return out
 
 
 class OpenAIChatOutput(OpenAIBaseOutput):
